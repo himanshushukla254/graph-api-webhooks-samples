@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<!--  <h4 align='center'>Something awesome will come here</h4>
+  <h4 align='center'>Motabyte Dev </h4> -->
+
+  <script>function statusChangeCallback(response) {
+    
+    if (response.status === 'connected') {
+      testAPI();
+    } else {
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '451445778568201',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.8' // use graph api version 2.8
+  });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+  };
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('me?fields=id,name,tagged_places', function(response) {
+     // console.log('Successful login for: ' + response.data[0].name);
+      document.getElementById('status').innerHTML =
+        'latitude,longitude are, ' + response.tagged_places.data[0].place.location.latitude +' ' + response.tagged_places.data[0].place.location.longitude;
+    });
+  }
+  
+</script>
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
+
+</body>
+</html>
