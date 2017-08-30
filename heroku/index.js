@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
   res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
-app.get(['/facebook', '/instagram'], function(req, res) {   
+app.get(['/facebook'], function(req, res) {   
   if (
     req.param('hub.mode') == 'subscribe' &&
     req.param('hub.verify_token') == token
@@ -50,13 +50,4 @@ app.post('/facebook', function(req, res) {
   received_updates.unshift(req.body);
   res.sendStatus(200);
 });
-
-app.post('/instagram', function(req, res) {
-  console.log('Instagram request body:');
-  console.log(req.body);
-  // Process the Instagram updates here
-  received_updates.unshift(req.body);
-  res.sendStatus(200);
-});
-
 app.listen();
